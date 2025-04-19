@@ -1,0 +1,75 @@
+auth:
+  reset_admin_password: false
+
+mqtt:
+  enabled: true
+  host: 192.162.158.21    # IP-Adresse of your MQTT Broker (e.g. Home Assistant)
+  user: mosquitto1234     # Your Mosquitto user
+  password: 1234567890    # Your Mosquitto password
+  topic_prefix: frigate
+
+detectors:
+  coral:
+    type: edgetpu
+    device: pci
+
+ffmpeg:
+  hwaccel_args: preset-rpi-64-h264
+
+tls:
+  enabled: false
+
+record:
+  enabled: true
+  alerts:
+    retain:
+      days: 30            # <- number of days to keep alert recordings
+  detections:
+    retain:
+      days: 5             # <- number of days to keep detections recordings
+
+snapshots:
+  enabled: true
+  timestamp: true
+  quality: 100
+  retain:
+    default: 30
+
+birdseye:
+  enabled: true
+  mode: objects           # motion oder 'objects' oder 'continuous'
+
+cameras:
+  Annke:                  # <------ Name the camera
+    enabled: true
+    ffmpeg:
+      inputs:
+        - path: rtsp://your_user:your_password@192.162.158.20:554/H264/ch1/main/av_stream
+          roles:
+            - record
+        - path: rtsp://your_user:your_password@192.162.158.20:554/H264/ch1/sub/av_stream
+          roles:
+            - detect
+    detect:
+      fps: 5
+    review:
+      alerts:
+        labels:
+          - person
+    objects:
+      track:
+        - person
+      mask: 0.516,0.883,0.842,0.793,0.935,1,0.792,1,0.539,0.999
+    motion:
+      mask: 0.518,0.887,0.845,0.791,0.938,1,0.793,1,0.539,0.999
+
+    onvif:
+      host: 192.162.158.20    # IP-Adresse of your camera
+      port: 8000              # Port of your camera 
+      user: your_user         # Your camera user
+      password: your_password # Your camera password
+
+version: 0.15-1
+notifications:
+  enabled: 'true'
+  email: your_email_address
