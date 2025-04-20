@@ -21,7 +21,7 @@ set -e
 
 ORIG_REPO_URL="https://github.com/google/gasket-driver.git"
 WORKDIR="$HOME/gasket-deb"
-PATCHED_DEB="gasket-dkms_1.0-18patched_all.deb"
+PATCHED_DEB="gasket-dkms_1.0-18_all.deb"
 SRCDIR="$WORKDIR/gasket-driver"
 
 echo "📥 Klone Repository..."
@@ -31,7 +31,7 @@ git clone "$ORIG_REPO_URL"
 cd "$SRCDIR"
 
 echo "🩹 Wende Patch an..."
-TARGET_FILE="$SRCDIR/src/gasket-core/gasket_core.c"
+TARGET_FILE="$SRCDIR/src/gasket_core.c"
 if grep -q "\.llseek = no_llseek" "$TARGET_FILE"; then
     sed -i 's/\.llseek = no_llseek/\.llseek = noop_llseek/g' "$TARGET_FILE"
     echo "✅ Patch angewendet."
