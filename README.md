@@ -114,7 +114,6 @@ In this repository I attached 3 examples:
 
 * Docker compose.yaml
 * Frigate config.yml
-* A patch script that supports in rebuilding the gasket module: build_patched_gasket_with_debuild.sh
 
 # Sources
 * Pineboards in WayBack machine:
